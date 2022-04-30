@@ -35,14 +35,14 @@ az login
 in the terminal and go through the login process.
 
 next you will need to set up nackend.tf file to store the state of your instatnce:
-`code(
+```
     backend "azurerm" {
     storage_account_name = "STORAGEACCOUNTNAME"
     container_name       = "CONTAINERNAME"
     key                  = "STATEHOLDER.tfstate"
     access_key  = "STORAGEACCOUNTACCESSKEY"
   }
-)`
+```
 Make sure you have access to the azure storage account.
 
 Finally, run the following

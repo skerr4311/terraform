@@ -122,12 +122,12 @@ resource "azurerm_api_management_api_operation_policy" "logicapp_oppol" {
                         <rewrite-uri id="apim-generated-policy" template="/manual/paths/invoke/?api-version=2016-06-01" />
                         <set-header id="apim-generated-policy" name="Ocp-Apim-Subscription-Key" exists-action="delete" />
                         <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized. Access token is missing or invalid.">
-                            <openid-config url="https://login.microsoftonline.com/36da45f1-dd2c-4d1f-af13-5abe46b99921/.well-known/openid-configuration" />
+                            <openid-config url="https://login.microsoftonline.com/{TENNANT-ID}/.well-known/openid-configuration" />
                             <audiences>
                                 <audience>${var.audience}</audience>
                             </audiences>
                             <issuers>
-                                <issuer>https://sts.windows.net/36da45f1-dd2c-4d1f-af13-5abe46b99921/</issuer>
+                                <issuer>https://sts.windows.net/{TENNANT-ID}/</issuer>
                             </issuers>
                             <required-claims>
                                 <claim name="scp" match="any">

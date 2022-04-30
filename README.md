@@ -34,7 +34,7 @@ az login
 ```
 in the terminal and go through the login process.
 
-next you will need to set up nackend.tf file to store the state of your instatnce:
+next you will need to set up backend.tf file to store the state of your instatnce:
 ```
     backend "azurerm" {
     storage_account_name = "STORAGEACCOUNTNAME"
@@ -69,6 +69,14 @@ to deploy your changes into azure cloud
 
 #### DevOps
 I use DevOps CI/CD pipelines for all these terraform scripts. You will need an app registered in Azure and contributor permission given to the app for any subscription you wish to release to. Once set up you will then need to set up a service connection using the app information in DevOps. That service connection will be used when running the terraform steps in the CD pipeline.
+
+My steps usually consist of the following:
+* get the storage key from the storage account using Azure Powershell step and save it.
+* Install terraform 1.0.6 using Terraform tool installer step.
+* Terraform : init using Terraform step.
+* Terraform : plan using Terraform step.
+* Terraform : apply using Terraform step.
+* Finally, I will use ARM template deployment step to push out my actual logic app code. or app service deploy.
 
 
 ## Create Logic App

@@ -34,6 +34,38 @@ az login
 ```
 in the terminal and go through the login process.
 
+next you will need to set up nackend.tf file to store the state of your instatnce:
+`code(
+    backend "azurerm" {
+    storage_account_name = "STORAGEACCOUNTNAME"
+    container_name       = "CONTAINERNAME"
+    key                  = "STATEHOLDER.tfstate"
+    access_key  = "STORAGEACCOUNTACCESSKEY"
+  }
+)`
+Make sure you have access to the azure storage account.
+
+Finally, run the following
+```
+terraform init
+```
+
+to initialize the project and set up the state needed for deployment.
+
+```
+terraform plan
+```
+
+to check the deployment for any errors before deploying
+
+```
+terraform apply
+```
+
+to deploy your changes into azure cloud
+
+
+
 
 #### DevOps
 I use DevOps CI/CD pipelines for all these terraform scripts. You will need an app registered in Azure and contributor permission given to the app for any subscription you wish to release to. Once set up you will then need to set up a service connection using the app information in DevOps. That service connection will be used when running the terraform steps in the CD pipeline.

@@ -6,7 +6,6 @@
 * [Create Logic App Route Through API Gateway](#create-logic-app-route-through-api-gateway)
 * [Logic App for connecting to storage account](#logic-app-for-connecting-to-storage-account)
 * [App Service With Custom DNS for Blazor](#app-service-with-custom-dns-for-blazor)
-* [Author](#author)
 ---
 ## General info
 This repo holds some basic terraform templates I have created over time working with DevOps and Azure. These are fantastic when set up correctly in DevOps to deal with disaster recovery. You can easily change the variables to destroy and redeploy app services or logic apps in any region or subscription in Azure. I find that setting up logic apps is a very quick way to get an API set up in the cloud.
@@ -28,14 +27,28 @@ This is a a fairly simple to understand flow. The steps involved are in the logi
 The terraform script will then output the endpoints for the new api. 
 
 ## Create Logic App Route Through API Gateway
-This one is a little more complex 
+This one is a little more complex. It starts with the same steps above, creating a logic app and setting up a basic api. 
+Once the above steps are completed the apim_apiSetup.tf file kicks in an completes the following:
+*Sets up a backend connection using information defined in the variables file and from the created logic app
+*builds the connection settings for the api
+*the creates and stores sas connection information to connect with the logic app
+*sets up backend policies in api management
+*set up the api operation responses
+*sets up the api operation policy (checks tokens sent to the endpoint and varifies them bofore allowing traffic through to the logic app)
+*set up the api schema defined in schemaTemplate
 
 ## Logic App for connecting to storage account
 This one makes use of azures trusted connections. This means you can completely lock off a storage account and only allow requests that come from this logic app.
+For this to work the executer of this script will need to have owner privlages over the storage account. The role assignment can be found at the last step of logic_app.tf and can be applied to any of the scripts here.
 
 ## App Service With Custom DNS for Blazor
-This script follows a very specific process. 
-
-## Author
-Steven Dangerfield-Kerr <br />
-Developer | Information Technology <br />
+This script follows a very specific process.
+*AppService_setup.tf is run and the app service is created in azure.
+*using the main.tf file the  script switches subscriptions to the dns subscription. (if your DNS is located in a different subscription)
+*DSN_setup.tf starts
+*a new DNS entry is created using the custom dns name assigned in the variables file.
+*a new TXT record is created to quickly verify ownership of the dns entry.
+*swich back to the app service connection.
+*the custom name is added to the app service.
+*an app managed cert is created for the app service.
+*the cert is then bound to the custom url.

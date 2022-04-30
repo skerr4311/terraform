@@ -18,6 +18,23 @@ All of the templates have a very common structure to them:
 * outputs.tf - (Information you would like to output on completion such as connection strings or identity information)
 * variables.tf - (To hold needed information such as resource group names but also customizable information such as what you would like to name the logic app)
 
+#### Running Localy
+I run these on VS Code. You will need the following:
+* Azure Terraform - extension installed on VSCode.
+* HashiCorp Terraform - extension installed on VSCode.
+* Terraform - extension installed on VSCode.
+* Azure CLI Tools - extension installed on VSCode.
+* Terraform installed on your device https://learn.hashicorp.com/tutorials/terraform/install-cli
+* Azure CLI installed on your device https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+* You will need contributer or higer permissions on any subscription you wish to deploy to.
+
+Start by running:
+```
+az login
+```
+in the terminal and go through the login process.
+
+
 #### DevOps
 I use DevOps CI/CD pipelines for all these terraform scripts. You will need an app registered in Azure and contributor permission given to the app for any subscription you wish to release to. Once set up you will then need to set up a service connection using the app information in DevOps. That service connection will be used when running the terraform steps in the CD pipeline.
 

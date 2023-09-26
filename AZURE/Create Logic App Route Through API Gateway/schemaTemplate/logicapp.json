@@ -1,0 +1,6 @@
+{
+    "task": "search",
+    "payload": {
+        "searchterm": ""
+    }
+}
